@@ -1,4 +1,9 @@
 # -*- coding: utf-8 -*-
+# Author: Tomás Hermosilla
+# e-mail: thermosilla [at] gmail [dot] com
+# Version: 0.2
+# Licence: AGPL v3
+
 import unittest
 
 from pyWorkingDays import BusinessCalendar
