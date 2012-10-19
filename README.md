@@ -38,11 +38,10 @@ This module implements the BusinessCalendar class, witch implements methods for 
 <pre><code>>>>from pyWorkingDays import BusinessCalendar
 >>>from datetime import date
 >>>
->>>start = BusinessDay(2012,10,1)
+>>>start = BusinessDay()
 >>>cal.add_days(start,5)
 datetime.date(2012,10,8)
 </code></pre>
 
 ##TODOs
-* <s>Custom calendars</s>
 * Dealing with business hours
