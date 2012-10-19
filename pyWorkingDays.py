@@ -25,24 +25,24 @@ class BusinessCalendar():
 		self.__calendar = [date(x[0],x[1],x[2]) for x in cal]
 		self.__weekend = self.__weekend_type[wt]
 
-	def isBusinessDay(self, day):
+	def is_business_day(self, day):
 		"""documentacion"""
 		if (day.isoweekday() in self.__weekend) or (day in self.__calendar):
 			return False
 		else:
 			return True
 
-	def isWeekendDay(self, day):
+	def is_weekend_day(self, day):
 		"""documentacion"""
 		if day.isoweekday() in self.__weekend:
 			return True
 		else:
 			return False
 
-	def setWeekend(self, wt = "standar"):
+	def set_weekend(self, wt = "standar"):
 		self.__weekend = self.__weekend_type[wt]
 
-	def setCalendar(self, cal = None):
+	def set_calendar(self, cal = None):
 		if cal == None:
 			cal = []
 		
@@ -54,7 +54,7 @@ class BusinessCalendar():
 		datelist = [(start + timedelta(days=x)) 
 					for x in range(0, days.days)]
 
-		return sum([self.isBusinessDay(x) for x in datelist])
+		return sum([self.is_business_day(x) for x in datelist])
 
 	# TODO: ver cómo eliminar recursividad
 	# TODO: refactorizar nombres de variables
@@ -62,15 +62,19 @@ class BusinessCalendar():
 		"""documentacion"""
 		habf = 0
 		if (days < 5):
-			if((days + start.isoweekday() - 5 - (2-len(self.__weekend))) * (1-self.isWeekendDay(start)) > 0):
+			if((days + start.isoweekday() - 5 - (2-len(self.__weekend))) * 
+						(1-self.is_weekend_day(start)) > 0):
 				habf = len(self.__weekend)
-		dowf = (start.isoweekday() - 5)*(-self.isWeekendDay(start)) 
-		end = start + timedelta(days  + habf + dowf + modf(days/5)[1]*len(self.__weekend)) 
+		dowf = (start.isoweekday() - 5)*(-self.is_weekend_day(start)) 
+		end = start + timedelta(days  + habf + dowf + modf(days/5)[1] * 
+						len(self.__weekend)) 
 
 		days = end - start
 		datelist = [(start + timedelta(days=x)) for x in range(1, days.days+1)]
 
-		calf = sum([not(self.isBusinessDay(x)) for x in datelist]) - sum([self.isWeekendDay(x) for x in datelist])
+		calf = sum([not(self.is_business_day(x)) 
+						for x in datelist]) - sum([self.is_weekend_day(x) 
+						for x in datelist])
 		
 		if calf == 0:
 			return end

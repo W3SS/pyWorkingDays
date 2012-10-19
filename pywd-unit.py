@@ -9,21 +9,22 @@ import unittest
 from pyWorkingDays import BusinessCalendar
 from datetime import date
 
+cal = BusinessCalendar("standar",[(2012,10,15),(2012,11,1),(2012,11,2)])
+
 class TestCalculoFechas(unittest.TestCase):
-	def test_isBusinessDay(self):
+	def test_is_business_day(self):
 		day = date(2012,10,15)
-		cal = BusinessCalendar("standar",[(2012,10,15),(2012,11,1),(2012,11,2)])
-		self.assertEqual(cal.isBusinessDay(day), False)
+		self.assertEqual(cal.is_business_day(day), False)
 
 		day = date(2012,10,14)
-		self.assertEqual(cal.isBusinessDay(day), False)	
+		self.assertEqual(cal.is_business_day(day), False)	
 
 		day = date(2012,10,16)
-		self.assertEqual(cal.isBusinessDay(day), True)	
+		self.assertEqual(cal.is_business_day(day), True)	
 
-	def test_diff_days(self):
-		cal = BusinessCalendar("standar",[(2012,10,15),(2012,11,1),(2012,11,2)])
-		
+	def test_diff_days_standar(self):
+		cal = BusinessCalendar("standar",
+			[(2012,10,15),(2012,11,1),(2012,11,2)])
 		start = date(2012,10,11)
 		end = date(2012,10,18)
 		self.assertEqual(cal.diff_days(start,end), 4)
@@ -36,7 +37,8 @@ class TestCalculoFechas(unittest.TestCase):
 		end = date(2012,10,19)
 		self.assertEqual(cal.diff_days(start,end), 3)
 
-		cal = BusinessCalendar("extended",[(2012,10,15),(2012,11,1),(2012,11,2)])
+	def test_diff_days_extended(self):
+		cal.set_weekend("extended")
 		
 		start = date(2012,10,11)
 		end = date(2012,10,18)
@@ -51,8 +53,6 @@ class TestCalculoFechas(unittest.TestCase):
 		self.assertEqual(cal.diff_days(start,end), 3)
 
 	def test_add_days(self):
-		cal = BusinessCalendar("standar",[(2012,10,15),(2012,11,1),(2012,11,2)])
-
 		start = date(2012,10,29)
 		days = 3
 		self.assertEqual(cal.add_days(start,days), date(2012,11,5))
